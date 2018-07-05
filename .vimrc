@@ -3,7 +3,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
@@ -27,6 +27,8 @@ Plug 'jparise/vim-graphql'
 Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
+Plug 'kchmck/vim-coffee-script'
+Plug 'cakebaker/scss-syntax.vim'
 
 "Colorschemes
 Plug 'mhartington/oceanic-next'
@@ -48,10 +50,17 @@ set list
 set listchars+=space:. "show spaces as dots
 set hidden
 set noswapfile " disabling swap files
+set nowrap
 let g:plug_window = 'enew'
 
 " Key Mappings
 let g:mapleader=','
+
+" Folding
+inoremap <Space> <C-O>za
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+onoremap <Space> <C-C>za
+vnoremap <Space> zf
 
 " Indenting
 noremap > >>
@@ -65,15 +74,15 @@ map <C-n> :NERDTreeToggle<CR>
 inoremap df <ESC>
 
 "" Multiply cursor keys
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_start_word_key      = '<C-d>'
-let g:multi_cursor_select_all_word_key = '<A-d>'
-let g:multi_cursor_start_key           = 'g<C-d>'
-let g:multi_cursor_select_all_key      = 'g<A-d>'
-let g:multi_cursor_next_key            = '<C-d>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
+" let g:multi_cursor_use_default_mapping=0
+" let g:multi_cursor_start_word_key      = '<C-d>'
+" let g:multi_cursor_select_all_word_key = '<A-d>'
+" let g:multi_cursor_start_key           = 'g<C-d>'
+" let g:multi_cursor_select_all_key      = 'g<A-d>'
+" let g:multi_cursor_next_key            = '<C-d>'
+" let g:multi_cursor_prev_key            = '<C-p>'
+" let g:multi_cursor_skip_key            = '<C-x>'
+" let g:multi_cursor_quit_key            = '<Esc>'
 
 "" Easymotion map
 map <Leader> <Plug>(easymotion-prefix)
@@ -105,6 +114,7 @@ endif
 let g:ale_fixers = {
 \   'javascript': ['eslint', 'prettier', 'prettier-eslint'],
 \   'ruby': [],
+\   'graphql': [],
 \}
 
 let g:ale_linters = {
@@ -148,5 +158,10 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Function'],
   \ 'header':  ['fg', 'String'] }
 
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave *.* mkview
+  autocmd BufWinEnter *.* silent loadview
+augroup END
 
 
