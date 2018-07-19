@@ -158,10 +158,10 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Function'],
   \ 'header':  ['fg', 'String'] }
 
+set viewoptions-=options
 augroup AutoSaveFolds
   autocmd!
   autocmd BufWinLeave *.* mkview
   autocmd BufWinEnter *.* silent loadview
 augroup END
-
 
