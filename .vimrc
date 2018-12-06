@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" Plug 'terryma/vim-multiple-cursors'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 Plug 'easymotion/vim-easymotion'
@@ -29,6 +28,7 @@ Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
 Plug 'kchmck/vim-coffee-script'
 Plug 'cakebaker/scss-syntax.vim'
+Plug 'elixir-editors/vim-elixir'
 
 "Colorschemes
 Plug 'mhartington/oceanic-next'
@@ -51,6 +51,7 @@ set listchars+=space:. "show spaces as dots
 set hidden
 set noswapfile " disabling swap files
 set nowrap
+set diffopt+=vertical " Gdiff in vertical split
 let g:plug_window = 'enew'
 
 " Key Mappings
@@ -73,22 +74,10 @@ vnoremap < <gv
 map <C-n> :NERDTreeToggle<CR>
 inoremap df <ESC>
 
-"" Multiply cursor keys
-" let g:multi_cursor_use_default_mapping=0
-" let g:multi_cursor_start_word_key      = '<C-d>'
-" let g:multi_cursor_select_all_word_key = '<A-d>'
-" let g:multi_cursor_start_key           = 'g<C-d>'
-" let g:multi_cursor_select_all_key      = 'g<A-d>'
-" let g:multi_cursor_next_key            = '<C-d>'
-" let g:multi_cursor_prev_key            = '<C-p>'
-" let g:multi_cursor_skip_key            = '<C-x>'
-" let g:multi_cursor_quit_key            = '<Esc>'
-
 "" Easymotion map
 map <Leader> <Plug>(easymotion-prefix)
 
-
-" Color Schemes
+"" Color Schemes
 
 if (has("termguicolors"))
   set termguicolors
@@ -100,6 +89,15 @@ endif
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline_highlighting_cache = 0
+
+" macros
+:let @c="$v^cconsole.log('dfpadflli, dfpA;df"
+:let @d="idebugger; //eslint-disable-linedf"
+:let @n="LztM"
+:let @p="H5jzbM"
+:let @u="f_xvU"
+:let @g=":GFiles?"
 
 " Vertical cursor in Inseart mode
 if exists('$TMUX')
@@ -111,6 +109,7 @@ else
 endif
 
 " Linting settings
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_fixers = {
 \   'javascript': ['eslint', 'prettier', 'prettier-eslint'],
 \   'ruby': [],
@@ -129,6 +128,9 @@ let g:strip_whitespace_on_save=1
 " CtrlSF settings
 nnoremap <Leader>a :CtrlSF<space>
 let g:ctrlsf_ignore_dir = ['public']
+let g:ctrlsf_auto_focus = {
+    \ "at": "start"
+    \ }
 
 "" Ack setting
 if executable('ag')
