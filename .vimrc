@@ -22,17 +22,25 @@ Plug 'mileszs/ack.vim'
 "Syntax highlighting
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'jparise/vim-graphql'
+" Plug 'jparise/vim-graphql'
 Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
 Plug 'kchmck/vim-coffee-script'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'elixir-editors/vim-elixir'
+" Plug 'cakebaker/scss-syntax.vim'
+" Plug 'elixir-editors/vim-elixir'
+Plug 'leafgarland/typescript-vim'
+" Plug 'Quramy/tsuquyomi'
+" Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'ycm-core/YouCompleteMe'
+
+"Haskell
+Plug 'neovimhaskell/haskell-vim'
 
 "Colorschemes
 Plug 'mhartington/oceanic-next'
 Plug 'joshdick/onedark.vim'
+" Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -51,6 +59,8 @@ set listchars+=space:. "show spaces as dots
 set hidden
 set noswapfile " disabling swap files
 set nowrap
+set ignorecase
+set smartcase
 set diffopt+=vertical " Gdiff in vertical split
 let g:plug_window = 'enew'
 
@@ -77,6 +87,32 @@ inoremap df <ESC>
 "" Easymotion map
 map <Leader> <Plug>(easymotion-prefix)
 
+"" Copy file name
+nmap <Leader>y :let @+=expand("%")<CR>
+
+"" EasyMotion new features
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>s <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+" Move cursor throw wrapping
+noremap <silent> k gk
+noremap <silent> j gj
+
+" Copy
+noremap <C-y> "*y
+
 "" Color Schemes
 
 if (has("termguicolors"))
@@ -84,12 +120,17 @@ if (has("termguicolors"))
 endif
 
  colorscheme onedark
+" colorscheme nord
 
 " airline settings
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_highlighting_cache = 0
+
+let g:ale_sign_error = '•'
+let g:ale_sign_warning = '•'
+let g:ale_set_highlights = 1
 
 " macros
 :let @c="$v^cconsole.log('dfpadflli, dfpA;df"
@@ -109,9 +150,10 @@ else
 endif
 
 " Linting settings
-let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_text_changed = 'never'
 let g:ale_fixers = {
 \   'javascript': ['eslint', 'prettier', 'prettier-eslint'],
+\   'typescript': ['prettier'],
 \   'ruby': [],
 \   'graphql': [],
 \}
@@ -131,6 +173,7 @@ let g:ctrlsf_ignore_dir = ['public']
 let g:ctrlsf_auto_focus = {
     \ "at": "start"
     \ }
+let g:ctrlsf_winsize = '60%'
 
 "" Ack setting
 if executable('ag')
